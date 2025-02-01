@@ -1,10 +1,15 @@
 package ru.yandex.practicum.assignment.avro;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.avro.io.BinaryDecoder;
+import org.apache.avro.io.DatumReader;
+import org.apache.avro.io.DecoderFactory;
+import org.apache.avro.specific.SpecificDatumReader;
 import ru.yandex.practicum.avro.DeviceAddedEvent;
 import ru.yandex.practicum.avro.DeviceRemovedEvent;
 import ru.yandex.practicum.avro.HubEvent;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HexFormat;
 
@@ -16,9 +21,9 @@ public class AvroAssignment2 {
     }
 
     public static HubEvent deserialize(byte[] bytes) throws IOException {
-        // Реализуйте метод в соответствии с заданием
-        //     ...
-        return null;
+        DatumReader<HubEvent> datumReader = new SpecificDatumReader<>(HubEvent.class);
+        BinaryDecoder decoder = DecoderFactory.get().binaryDecoder(new ByteArrayInputStream(bytes), null);
+        return datumReader.read(null, decoder);
     }
 
     // Этот метод нельзя менять
