@@ -1,5 +1,18 @@
 @namespace("ru.yandex.practicum.avro")
 protocol UserProtocol {
-	// Опишите схему в соответствии с заданием
-	//  ...
+	enum Gender {
+        male,
+        female
+      }
+
+      record User {
+        int id;
+        string firstName;
+        union { null, string } middleName = null;
+        string lastName;
+        array<string> interests;
+        @logicalType("date") int birthdate;
+        Gender gender;
+        map<string> contacts;
+      }
 }
